@@ -1,8 +1,11 @@
 package estadisticas
 
 import (
+	"bufio"
 	"fmt"
 	"math"
+	"os"
+	"pruebas/archivos"
 
 	"gonum.org/v1/gonum/stat/distuv"
 )
@@ -25,16 +28,25 @@ func calcMedia(data []float64) float64 {
 }
 
 func MediaTest(data []float64) {
+	filename := archivos.Filename() + "_media_output.txt"
+	file, _ := os.Create(filename)
+	writer := bufio.NewWriter(file)
+
 	media := calcMedia(data)
 	n := float64(len(data))
 	fmt.Println("\nMedia de los datos:", media)
+	writer.WriteString(fmt.Sprintf("Media de los datos: %v\n", media))
 	li := 0.5 - (1.96)/math.Sqrt(12*n)
 	ls := 0.5 + (1.96)/math.Sqrt(12*n)
-	fmt.Printf("Limites: [%f, %f]\n", li, ls)
+	show := fmt.Sprintf("Limites: [%f, %f]\n", li, ls)
+	fmt.Print(show)
 
 	fmt.Println("Ho = El conjunto tiene un media de 0.5")
+	writer.WriteString("Ho = El conjunto tiene un media de 0.5\n")
 	Ho := li <= media && media <= ls
-	fmt.Printf("¿Se cumple Ho? Respuesta: %s\n", response(Ho))
+	show = fmt.Sprintf("¿Se cumple Ho? Respuesta: %s\n", response(Ho))
+	fmt.Print(show)
+	fmt.Println("\nSalida almacenada en el archivo:", filename)
 }
 
 func VarianzaTest(data []float64) {
