@@ -46,6 +46,8 @@ func LoadDataFromCSV(filename string) []float64 {
 	data := make([]float64, len(dataAsString))
 
 	for i, n := range dataAsString {
+		n = strings.ReplaceAll(n, "\"", "")
+		n = strings.ReplaceAll(n, ",", ".")
 		value, err := strconv.ParseFloat(n, 64)
 		if err != nil {
 			panic(fmt.Errorf("error el linea %d del archivo: %s no es valor decimal.\n%v", i+1, n, err))

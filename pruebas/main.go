@@ -8,6 +8,7 @@ import (
 	"pruebas/estadisticas"
 	"pruebas/intervalos"
 	"pruebas/kolgomorov"
+	"pruebas/poisson"
 	"pruebas/poker"
 )
 
@@ -16,7 +17,7 @@ func main() {
 	var data []float64
 	loaded := false
 	filename := ""
-	for opc != 9 {
+	for opc != 10 {
 		fmt.Println("\nBienvenido al módulo de pruebas de números pseudo aleatorios")
 		fmt.Println()
 		fmt.Println("\n[1]. Cargar datos desde un archivo")
@@ -28,8 +29,9 @@ func main() {
 		fmt.Println("[6]. Ejecutar prueba de la varianza")
 		fmt.Println("[7]. Ejecutar prueba de las corridas")
 		fmt.Println("[8]. Realizar variable con Bernoulli")
+		fmt.Println("[9]. Realizar variable con Poisson")
 		fmt.Println()
-		fmt.Println("[9]. Salir")
+		fmt.Println("[10]. Salir")
 		fmt.Println()
 		fmt.Print("Seleccionar: ")
 		fmt.Scan(&opc)
@@ -93,6 +95,24 @@ func main() {
 				fmt.Scan(&n)
 			}
 			bernoulli.BernoulliVariable(data, n)
+
+		case 9:
+			if !loaded {
+				fmt.Println("\nNo se han cargado datos")
+				continue
+			}
+			n := 0
+			x := 0.0
+			for n <= 0 {
+				fmt.Print("Ingrese el número de subgrupos: ")
+				fmt.Scan(&n)
+			}
+
+			for x <= 0 {
+				fmt.Print("Ingrese la media: ")
+				fmt.Scan(&x)
+			}
+			poisson.PoissonVariable(data, x, n)
 		}
 	}
 }
