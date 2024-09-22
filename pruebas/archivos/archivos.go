@@ -9,6 +9,12 @@ import (
 	"strings"
 )
 
+var filenameAbs string
+
+func Filename() string {
+	return filenameAbs
+}
+
 func loadCSV(filename string) []string {
 	file, err := os.Open(filename)
 
@@ -38,6 +44,7 @@ func loadCSV(filename string) []string {
 
 func LoadDataFromCSV(filename string) []float64 {
 	finalFileName := filename
+	filenameAbs = filename
 	if !strings.HasSuffix(filename, ".csv") {
 		finalFileName += ".csv"
 	}
