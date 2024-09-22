@@ -37,11 +37,12 @@ func loadCSV(filename string) []string {
 }
 
 func LoadDataFromCSV(filename string) []float64 {
+	finalFileName := filename
 	if !strings.HasSuffix(filename, ".csv") {
-		filename += ".csv"
+		finalFileName += ".csv"
 	}
 
-	dataAsString := loadCSV(filename)
+	dataAsString := loadCSV(finalFileName)
 
 	data := make([]float64, len(dataAsString))
 

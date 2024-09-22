@@ -12,11 +12,16 @@ import (
 	"pruebas/poker"
 )
 
+var filename string
+
+func Filename() string {
+	return filename
+}
+
 func main() {
 	opc := 0
 	var data []float64
 	loaded := false
-	filename := ""
 	for opc != 10 {
 		fmt.Println("\nBienvenido al módulo de pruebas de números pseudo aleatorios")
 		fmt.Println()

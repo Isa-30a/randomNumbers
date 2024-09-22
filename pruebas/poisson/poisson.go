@@ -35,9 +35,14 @@ func PoissonVariable(data []float64, x float64, n int) {
 		last += poisson_data[i]
 	}
 
+	limits[len(limits)-1].ls = 1.0
+
 	fmt.Println("\nRandom\tGrupo pertenencia")
 	for _, d := range data {
 		pos := searchBetweenLimits(d, limits)
+		if pos == -1 {
+			fmt.Println("Se determinó que", d, "no se encuentra en ningun limite")
+		}
 		fmt.Printf("%.5f\t%d\n", d, limits[pos].i)
 		limit := limits[pos]
 		limit.n += 1
