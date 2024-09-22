@@ -24,7 +24,7 @@ func KolgomorovTest(data []float64) {
 	}
 	max := -1.0
 	for i := range n {
-		fmt.Printf("[%.1f - %.5f], ", divsArrays[i], clonedData[i])
+		fmt.Printf("[%.5f - %.5f], ", divsArrays[i], clonedData[i])
 		divsArrays[i] = math.Abs(divsArrays[i] - clonedData[i])
 		if divsArrays[i] > max {
 			max = divsArrays[i]
@@ -32,7 +32,7 @@ func KolgomorovTest(data []float64) {
 	}
 	fmt.Println()
 	for i := range n {
-		fmt.Printf("[%.2f], ", divsArrays[i])
+		fmt.Printf("[%.5f], ", divsArrays[i])
 	}
 	fmt.Println()
 	fmt.Println("Máximo valor:", max)
