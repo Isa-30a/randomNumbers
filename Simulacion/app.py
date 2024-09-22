@@ -54,4 +54,5 @@ class App:
             # Escribir las filas
             for item in items:
                 row = self.table.tabla.item(item)['values']
-                writer.writerow(row)
+                column_value = row [2]
+                writer.writerow([column_value])
