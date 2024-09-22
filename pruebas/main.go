@@ -10,114 +10,81 @@ import (
 	"pruebas/kolgomorov"
 	"pruebas/poisson"
 	"pruebas/poker"
+	"strconv"
+	"strings"
 )
 
-var filename string
+var functions = map[string]func(data []float64, inputs []string){
+	"BERNOULLI":  Bernoulli,
+	"CORRIDAS":   Corridas,
+	"MEDIA":      Media,
+	"VARIANZA":   Varianza,
+	"INTERVALOS": Intervalos,
+	"KOLGOMOROV": Kolgomorov,
+	"POISSON":    Poisson,
+	"POKER":      Poker,
+}
 
-func Filename() string {
-	return filename
+func Bernoulli(data []float64, inputs []string) {
+	pe, err := strconv.ParseFloat(inputs[2], 64)
+	if err != nil {
+		panic(err)
+	}
+	bernoulli.BernoulliVariable(data, pe)
+}
+
+func Corridas(data []float64, inputs []string) {
+	corridas.CorridasTest(data)
+}
+
+func Media(data []float64, inputs []string) {
+	estadisticas.MediaTest(data)
+}
+
+func Varianza(data []float64, inputs []string) {
+	estadisticas.VarianzaTest(data)
+}
+
+func Intervalos(data []float64, inputs []string) {
+	n, err := strconv.Atoi(inputs[2])
+	if err != nil {
+		panic(err)
+	}
+	intervalos.IntervalosTest(data, n)
+}
+
+func Kolgomorov(data []float64, inputs []string) {
+	kolgomorov.KolgomorovTest(data)
+}
+
+func Poisson(data []float64, inputs []string) {
+	x, err := strconv.ParseFloat(inputs[2], 64)
+	if err != nil {
+		panic(err)
+	}
+	n, err := strconv.Atoi(inputs[3])
+	if err != nil {
+		panic(err)
+	}
+	poisson.PoissonVariable(data, x, n)
+}
+
+func Poker(data []float64, inputs []string) {
+	poker.PokerTest(data)
 }
 
 func main() {
-	opc := 0
-	var data []float64
-	loaded := false
-	for opc != 10 {
-		fmt.Println("\nBienvenido al módulo de pruebas de números pseudo aleatorios")
-		fmt.Println()
-		fmt.Println("\n[1]. Cargar datos desde un archivo")
-		fmt.Println()
-		fmt.Println("[2]. Ejecutar prueba de Poker")
-		fmt.Println("[3]. Ejecutar prueba de intervalos")
-		fmt.Println("[4]. Ejecutar prueba de Kolgomorov Smirnov")
-		fmt.Println("[5]. Ejecutar prueba de la media")
-		fmt.Println("[6]. Ejecutar prueba de la varianza")
-		fmt.Println("[7]. Ejecutar prueba de las corridas")
-		fmt.Println("[8]. Realizar variable con Bernoulli")
-		fmt.Println("[9]. Realizar variable con Poisson")
-		fmt.Println()
-		fmt.Println("[10]. Salir")
-		fmt.Println()
-		fmt.Print("Seleccionar: ")
-		fmt.Scan(&opc)
-		switch opc {
-		case 1:
-			fmt.Print("Ingrese el nombre del archivo .csv donde se encuentran los números pseudo aleatorios: ")
-			fmt.Scan(&filename)
-			data = archivos.LoadDataFromCSV(filename)
-			loaded = true
-			fmt.Println("\nDatos cargados correctamente")
-		case 2:
-			if !loaded {
-				fmt.Println("\nNo se han cargado datos")
-				continue
-			}
-			poker.PokerTest(data)
-		case 3:
-			if !loaded {
-				fmt.Println("\nNo se han cargado datos")
-				continue
-			}
-			n := 0
-			for n <= 1 {
-				fmt.Print("Ingrese el número de intervalos (recomendado raiz de n): ")
-				fmt.Scan(&n)
-			}
-			intervalos.IntervalosTest(data, n)
-		case 4:
-			if !loaded {
-				fmt.Println("\nNo se han cargado datos")
-				continue
-			}
-			kolgomorov.KolgomorovTest(data)
-		case 5:
-			if !loaded {
-				fmt.Println("\nNo se han cargado datos")
-				continue
-			}
-			estadisticas.MediaTest(data)
-		case 6:
-			if !loaded {
-				fmt.Println("\nNo se han cargado datos")
-				continue
-			}
-			estadisticas.VarianzaTest(data)
-		case 7:
-			if !loaded {
-				fmt.Println("\nNo se han cargado datos")
-				continue
-			}
-			corridas.CorridasTest(data)
-
-		case 8:
-			if !loaded {
-				fmt.Println("\nNo se han cargado datos")
-				continue
-			}
-			n := 0.0
-			for n <= 0 {
-				fmt.Print("Ingrese la probabilidad de éxito del evento: ")
-				fmt.Scan(&n)
-			}
-			bernoulli.BernoulliVariable(data, n)
-
-		case 9:
-			if !loaded {
-				fmt.Println("\nNo se han cargado datos")
-				continue
-			}
-			n := 0
-			x := 0.0
-			for n <= 0 {
-				fmt.Print("Ingrese el número de subgrupos: ")
-				fmt.Scan(&n)
-			}
-
-			for x <= 0 {
-				fmt.Print("Ingrese la media: ")
-				fmt.Scan(&x)
-			}
-			poisson.PoissonVariable(data, x, n)
-		}
+	var stdin string
+	fmt.Scan(&stdin)
+	inputs := strings.Split(stdin, ";")
+	if len(inputs) < 2 {
+		panic("la entrada no fue valida")
 	}
+	inputs[0] = strings.ToUpper(inputs[0])
+	data := archivos.LoadDataFromCSV(inputs[1])
+	function, ok := functions[inputs[0]]
+	if !ok {
+		panic("unknowed function")
+	}
+	function(data, inputs)
 }
