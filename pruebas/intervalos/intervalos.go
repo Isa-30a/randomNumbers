@@ -15,17 +15,12 @@ type intervalo struct {
 func IntervalosTest(data []float64, n int) {
 	intervalo_value := 1 / float64(n)
 	intervalos := make(map[float64]intervalo)
-	for i := intervalo_value; i <= 1; i += intervalo_value {
+	for i := intervalo_value; i < 1; i += intervalo_value {
 		intervalos[i] = intervalo{n: 0, group: make([]float64, 0, 10)}
 	}
 
 	if len(intervalos) == n-1 {
 		intervalos[1] = intervalo{n: 0, group: make([]float64, 0, 10)}
-	}
-
-	if len(intervalos) != n {
-		fmt.Println("error: el número de intervalos no parece cuadrar")
-		return
 	}
 
 	for _, d := range data {

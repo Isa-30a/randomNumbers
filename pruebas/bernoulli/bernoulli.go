@@ -1,6 +1,11 @@
 package bernoulli
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"pruebas/archivos"
+)
 
 func BernoulliVariable(data []float64, pe float64) {
 	pf := 1 - pe
@@ -11,6 +16,8 @@ func BernoulliVariable(data []float64, pe float64) {
 		return 0
 	}
 	sumExitosos := 0
+	file, _ := os.Create(archivos.Filename() + "_bernoulli_output.txt")
+	bufio := bufio.NewWriter(file)
 	fmt.Println("Probabilidad de éxito:", pe)
 	fmt.Println("Probabilidad de falla:", pf)
 	fmt.Println("i\tRi    \tXi\t¿éxtoso?")
