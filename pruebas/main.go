@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"pruebas/archivos"
-	intervalos "pruebas/intevalos"
+	"pruebas/intervalos"
 	"pruebas/poker"
 )
 
