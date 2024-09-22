@@ -19,10 +19,10 @@ func PokerTest(data []float64) {
 		"TD": {n: 0, group: make([]string, 0, 10), ei: 0.3024},
 		"1P": {n: 0, group: make([]string, 0, 10), ei: 0.5040},
 		"2P": {n: 0, group: make([]string, 0, 10), ei: 0.1080},
-		"T":  {n: 0, group: make([]string, 0, 10), ei: 0.0090},
+		"T ": {n: 0, group: make([]string, 0, 10), ei: 0.0090},
 		"FH": {n: 0, group: make([]string, 0, 10), ei: 0.0720},
 		"PK": {n: 0, group: make([]string, 0, 10), ei: 0.0045},
-		"Q":  {n: 0, group: make([]string, 0, 10), ei: 0.0001},
+		"Q ": {n: 0, group: make([]string, 0, 10), ei: 0.0001},
 	}
 	for i, n := range data {
 		n_string := strconv.FormatFloat(n, 'f', 5, 64)
@@ -44,12 +44,12 @@ func PokerTest(data []float64) {
 		fmt.Println("\n********************************************************")
 	}
 
-	fmt.Println("Categoria\tOi\tEi\t(Ei - Oi)² / Ei")
+	fmt.Println("Cat\tOi\tEi\t\t\t(Ei - Oi)² / Ei")
 	var sum float64
 	for hand, hand_data := range possibles_results {
 		ei := hand_data.ei * float64(len(data))
 		r := math.Pow(ei-float64(hand_data.n), 2) / ei
-		fmt.Printf("%s  | \t%d   | \t(%f)(%d)=%f   | \t%f\n", hand, hand_data.n, hand_data.ei, len(data), ei, r)
+		fmt.Printf("%s \t%d\t(%.5f)(%d)=%.5f   | \t%.5f\n", hand, hand_data.n, hand_data.ei, len(data), ei, r)
 		sum += r
 	}
 	fmt.Println("X²o =", sum)
@@ -79,7 +79,7 @@ func verifyNumber(digits []string) string {
 	}
 
 	if len(reps) == 1 {
-		return "Q"
+		return "Q "
 	}
 
 	return "FAILURE"
@@ -112,5 +112,5 @@ func reverify(digits []string) string {
 		return "FH"
 	}
 
-	return "T"
+	return "T "
 }
