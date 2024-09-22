@@ -1,8 +1,11 @@
 package corridas
 
 import (
+	"bufio"
 	"fmt"
 	"math"
+	"os"
+	"pruebas/archivos"
 )
 
 func CorridasTest(data []float64) {
@@ -18,12 +21,20 @@ func CorridasTest(data []float64) {
 		prev = data[i]
 	}
 	iprev := -1
+
+	filename := archivos.Filename() + "_corridas_output.txt"
+	file, _ := os.Create(filename)
+	writer := bufio.NewWriter(file)
+
 	fmt.Println("Ri\tX\t¿Corrida?")
+	writer.WriteString("Ri\tX\t¿Corrida?\n")
 	corrida := true
 	Co := 0
 	for i := range data {
 		corrida = cmpArray[i] != iprev
-		fmt.Printf("%.5f\t%d\t%v\n", data[i], cmpArray[i], corrida)
+		show := fmt.Sprintf("%.5f\t%d\t%v\n", data[i], cmpArray[i], corrida)
+		fmt.Print(show)
+		writer.WriteString(show)
 		if corrida {
 			Co++
 		}
@@ -33,11 +44,20 @@ func CorridasTest(data []float64) {
 	Vco := (16*n - 29) / 9
 	Zo := math.Abs((float64(Co) - Cuo) / math.Sqrt(Vco))
 	fmt.Println("\nNúmero de corridas:", Co)
-	fmt.Println("")
-	fmt.Printf("Zo = |(Co - Cuo) / Vco| = |(%d - %f)/%f| = %f", Co, Cuo, math.Sqrt(Vco), Zo)
+	writer.WriteString(fmt.Sprintf("\nNúmero de corridas: %v", Co))
+
+	fmt.Println()
+	show := fmt.Sprintf("Zo = |(Co - Cuo) / Vco| = |(%d - %f)/%f| = %f", Co, Cuo, math.Sqrt(Vco), Zo)
+	fmt.Print(show)
+	writer.WriteString(show)
 	if Zo < 1.96 {
 		fmt.Println("\nEL CONJUNTO DE NÚMEROS ES INDEPENDIENTE")
+		writer.WriteString("\nEL CONJUNTO DE NÚMEROS ES INDEPENDIENTE\n")
 	} else {
 		fmt.Println("\nEL CONJUNTO DE NÚMERO NO ES INDEPENDIENTE")
+		writer.WriteString("\nEL CONJUNTO DE NÚMEROS NO ES INDEPENDIENTE\n")
 	}
+
+	writer.Flush()
+	fmt.Println("\nLa salida fue almacenada en", filename)
 }
