@@ -25,7 +25,7 @@ func IntervalosTest(data []float64, n int) {
 
 	for _, d := range data {
 		var possible_range float64
-		possible_range = 1.1
+		possible_range = 1
 		for k := range intervalos {
 			if d < k && k < possible_range {
 				possible_range = k
