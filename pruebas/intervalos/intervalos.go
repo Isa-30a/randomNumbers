@@ -1,8 +1,11 @@
 package intervalos
 
 import (
+	"bufio"
 	"fmt"
 	"math"
+	"os"
+	"pruebas/archivos"
 
 	"gonum.org/v1/gonum/stat/distuv"
 )
@@ -13,6 +16,10 @@ type intervalo struct {
 }
 
 func IntervalosTest(data []float64, n int) {
+	filename := archivos.Filename() + "_intervalos_output.txt"
+	file, _ := os.Create(filename)
+	writer := bufio.NewWriter(file)
+
 	intervalo_value := 1 / float64(n)
 	intervalos := make(map[float64]intervalo)
 	for i := intervalo_value; i < 1; i += intervalo_value {
@@ -39,26 +46,44 @@ func IntervalosTest(data []float64, n int) {
 
 	N := len(data) / n
 	fmt.Println("Cantidad esperada por sub grupos:", N)
+	writer.WriteString(fmt.Sprintf("Cantidad esperada por subgrupos: %d\n", N))
 	fmt.Println("Subgrupo\tN° Elementos")
+	writer.WriteString("Subgrupo\tN° Elementos\n")
 	for k, v := range intervalos {
-		fmt.Printf("%f\t%d\n", k, v.n)
+		show := fmt.Sprintf("%f\t%d\n", k, v.n)
+		fmt.Print(show)
+		writer.WriteString(show)
 	}
 
 	fmt.Println("\nFormula:")
-	fmt.Printf("X²o = (1/%d)*{", N)
+	writer.WriteString("\nFormula:\n")
+	show := fmt.Sprintf("X²o = (1/%d)*{", N)
+	fmt.Print(show)
+	writer.WriteString(show)
 	var sum float64
 	for _, v := range intervalos {
-		fmt.Printf("(%d - %d)² + ", v.n, N)
+		show := fmt.Sprintf("(%d - %d)² + ", v.n, N)
+		fmt.Print(show)
+		writer.WriteString(show)
 		sum += math.Pow(float64(v.n-N), 2)
 	}
 	X2o := 1 / float64(N) * sum
-	fmt.Printf(" } = %f\n", X2o)
+	show = fmt.Sprintf(" } = %f\n", X2o)
+	fmt.Print(show)
+	writer.WriteString(show)
 	X2 := distuv.ChiSquared{K: float64(n - 1)}.Quantile(0.95)
-	fmt.Printf("X²[0.05,%d] = %f\n", n-1, X2)
+	show = fmt.Sprintf("X²[0.05,%d] = %f\n", n-1, X2)
+	fmt.Print(show)
+	writer.WriteString(show)
 
 	if X2o < X2 {
 		fmt.Println("\nEL CONJUNTO DE NÚMEROS ESTÁ DISTRIBUIDO UNIFORMEMENTE")
+		writer.WriteString("\nEL CONJUNTO DE NÚMEROS ESTÁ DISTRIBUIDO UNIFORMEMENTE")
 	} else {
 		fmt.Println("\nEL CONJUNTO DE NÚMEROS NO ESTÁ DISTRIBUIDO UNIFORMEMENTE")
+		writer.WriteString("\nEL CONJUNTO DE NÚMEROS NO ESTÁ DISTRIBUIDO UNIFORMEMENTE")
 	}
+
+	writer.Flush()
+	fmt.Println("La salida fue almacenada en el archivo:", filename)
 }

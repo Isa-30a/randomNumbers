@@ -1,8 +1,11 @@
 package poker
 
 import (
+	"bufio"
 	"fmt"
 	"math"
+	"os"
+	"pruebas/archivos"
 	"strconv"
 	"strings"
 )
@@ -14,6 +17,10 @@ type pokerHand struct {
 }
 
 func PokerTest(data []float64) {
+	filename := archivos.Filename() + "_poker_output.txt"
+	file, _ := os.Create(filename)
+	writer := bufio.NewWriter(file)
+
 	values := make([][]string, len(data))
 	possibles_results := map[string]pokerHand{
 		"TD": {n: 0, group: make([]string, 0, 10), ei: 0.3024},
@@ -39,25 +46,41 @@ func PokerTest(data []float64) {
 
 	for hand, hand_data := range possibles_results {
 		fmt.Println("Mano:", hand)
+		writer.WriteString(fmt.Sprintln("Mano:", hand))
+
 		fmt.Println("Número de elementos con esta mano:", hand_data.n)
+		writer.WriteString(fmt.Sprintln("Número de elementos con esta mano:", hand_data.n))
+
 		fmt.Println("Elementos en esta mano:", hand_data.group)
+		writer.WriteString(fmt.Sprintln("Elementos en esta mano:", hand_data.group))
+
 		fmt.Println("\n********************************************************")
+		writer.WriteString(fmt.Sprintln("\n********************************************************"))
 	}
 
 	fmt.Println("Cat\tOi\tEi\t\t\t(Ei - Oi)² / Ei")
+	writer.WriteString(fmt.Sprintln("Cat\tOi\tEi\t\t\t(Ei - Oi)² / Ei"))
 	var sum float64
 	for hand, hand_data := range possibles_results {
 		ei := hand_data.ei * float64(len(data))
 		r := math.Pow(ei-float64(hand_data.n), 2) / ei
-		fmt.Printf("%s \t%d\t(%.5f)(%d)=%.5f   | \t%.5f\n", hand, hand_data.n, hand_data.ei, len(data), ei, r)
+		show := fmt.Sprintf("%s \t%d\t(%.5f)(%d)=%.5f   | \t%.5f\n", hand, hand_data.n, hand_data.ei, len(data), ei, r)
+		fmt.Print(show)
+		writer.WriteString(show)
 		sum += r
 	}
 	fmt.Println("X²o =", sum)
+	writer.WriteString(fmt.Sprintln("X²o =", sum))
 	if 12.56 < sum {
 		fmt.Println("\nEL CONJUNTO DE NÚMEROS NO ES INDEPENDIENTE")
+		writer.WriteString(fmt.Sprintln("\nEL CONJUNTO DE NÚMEROS NO ES INDEPENDIENTE"))
 	} else {
 		fmt.Println("\nEL CONJUNTO DE NÚMEROS ES INDEPENDIENTE")
+		writer.WriteString(fmt.Sprintln("\nEL CONJUNTO DE NÚMEROS ES INDEPENDIENTE"))
 	}
+
+	writer.Flush()
+	fmt.Println("\nLa salida fue almacenada en el archivo:", filename)
 }
 
 func verifyNumber(digits []string) string {
