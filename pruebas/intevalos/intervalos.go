@@ -58,7 +58,7 @@ func IntervalosTest(data []float64, n int) {
 	}
 	X2o := 1 / float64(N) * sum
 	fmt.Printf(" } = %f\n", X2o)
-	X2 := distuv.ChiSquared{K: float64(n - 1)}.Quantile(0.05)
+	X2 := distuv.ChiSquared{K: float64(n - 1)}.Quantile(0.95)
 	fmt.Printf("X²[0.05,%d] = %f\n", n-1, X2)
 
 	if X2o < X2 {
