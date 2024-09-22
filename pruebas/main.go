@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"pruebas/archivos"
+	"pruebas/corridas"
 	"pruebas/estadisticas"
 	"pruebas/intervalos"
 	"pruebas/kolgomorov"
@@ -14,16 +15,19 @@ func main() {
 	var data []float64
 	loaded := false
 	filename := ""
-	for opc != 7 {
+	for opc != 8 {
 		fmt.Println("\nBienvenido al módulo de pruebas de números pseudo aleatorios")
+		fmt.Println()
 		fmt.Println("\n[1]. Cargar datos desde un archivo")
+		fmt.Println()
 		fmt.Println("[2]. Ejecutar prueba de Poker")
 		fmt.Println("[3]. Ejecutar prueba de intervalos")
 		fmt.Println("[4]. Ejecutar prueba de Kolgomorov Smirnov")
 		fmt.Println("[5]. Ejecutar prueba de la media")
 		fmt.Println("[6]. Ejecutar prueba de la varianza")
+		fmt.Println("[7]. Ejecutar prueba de las corridas")
 		fmt.Println()
-		fmt.Println("[7]. Salir")
+		fmt.Println("[8]. Salir")
 		fmt.Println()
 		fmt.Print("Seleccionar: ")
 		fmt.Scan(&opc)
@@ -69,6 +73,12 @@ func main() {
 				continue
 			}
 			estadisticas.VarianzaTest(data)
+		case 7:
+			if !loaded {
+				fmt.Println("\nNo se han cargado datos")
+				continue
+			}
+			corridas.CorridasTest(data)
 		}
 	}
 }
