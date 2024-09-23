@@ -1,4 +1,0 @@
-Varianza: 0.08430186372830256
-Limites: [0.06031, 0.11002]
-Ho = El conjunto tiene un varianza de 1/12
-¿Se cumple Ho? Respuesta: Sí

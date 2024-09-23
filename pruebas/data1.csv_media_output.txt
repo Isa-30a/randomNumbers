@@ -1,4 +1,0 @@
-Media de los datos: 0.4879689333251666
-Limites: [0.396699, 0.603301]
-Ho = El conjunto tiene un media de 0.5
-¿Se cumple Ho? Respuesta: Sí
