@@ -1,7 +1,7 @@
 import tkinter as tk
 
 class InputFrame:
-    def __init__(self, root, calcular, exportar_csv):
+    def __init__(self, root, calcular, exportar_csv, probar):
         self.frame = tk.Frame(root)
         self.frame.pack(side=tk.TOP, fill=tk.X, padx=10, pady=10)
 
@@ -21,8 +21,8 @@ class InputFrame:
         self.seed = tk.Entry(self.frame)
         self.seed.grid(row=1, column=1, padx=5, pady=5)
         
-        self.option = tk.StringVar(value="lineal")
-
+        self.option = tk.StringVar(value="lineal")  
+        
         # Crear radio buttons
         radio_frame = tk.Frame(self.frame)
         radio_frame.grid(row=2, column=0, columnspan=2, pady=10)
@@ -36,3 +36,16 @@ class InputFrame:
         
         exportar_btn = tk.Button(self.frame, text="Exportar a csv", command=exportar_csv)
         exportar_btn.grid(row=5, column=1, columnspan=1, pady=10)
+        
+        opciones = ["BERNOULLI", "CORRIDAS", "MEDIA", "VARIANZA", "INTERVALOS", "KOLGOMOROV", "POISSON", "POKER"]
+
+        # Variable para guardar la opción seleccionada
+        self.pruebas = tk.StringVar(root)
+        self.pruebas.set(opciones[0])  # Valor por defecto
+
+        # Crear el menú desplegable (OptionMenu)
+        self.menu_desplegable = tk.OptionMenu(root, self.pruebas, *opciones)
+        self.menu_desplegable.pack(pady=10, padx=5)
+        
+        probar = tk.Button(self.frame, text="Probar", command=probar)
+        probar.grid(row=5, column=4, columnspan=1, pady=10)
