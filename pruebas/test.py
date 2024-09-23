@@ -14,6 +14,6 @@ def ejecutar_programa_y_dar_entrada(comando, entrada):
         print("Error del programa:\n", error)
 
 # Ejemplo de uso
-comando = ["./main"]  # Puedes cambiar "cat" por cualquier programa que desees ejecutar
+comando = ["main"]  # Puedes cambiar "cat" por cualquier programa que desees ejecutar
 entrada = "poisson;datos_a1;0.5;5"
 ejecutar_programa_y_dar_entrada(comando, entrada)
