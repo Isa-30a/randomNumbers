@@ -26,8 +26,8 @@ func PokerTest(data []float64) {
 		"TD": {n: 0, group: make([]string, 0, 10), ei: 0.3024},
 		"1P": {n: 0, group: make([]string, 0, 10), ei: 0.5040},
 		"2P": {n: 0, group: make([]string, 0, 10), ei: 0.1080},
-		"T ": {n: 0, group: make([]string, 0, 10), ei: 0.0090},
-		"FH": {n: 0, group: make([]string, 0, 10), ei: 0.0720},
+		"T ": {n: 0, group: make([]string, 0, 10), ei: 0.0720},
+		"FH": {n: 0, group: make([]string, 0, 10), ei: 0.0090},
 		"PK": {n: 0, group: make([]string, 0, 10), ei: 0.0045},
 		"Q ": {n: 0, group: make([]string, 0, 10), ei: 0.0001},
 	}
