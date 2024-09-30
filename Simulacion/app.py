@@ -49,7 +49,7 @@ class App:
                 aux = xi
     
     def exportar_csv(self):
-        file_path = filedialog.asksaveasfilename(defaultextension=".csv", filetypes=[("CSV files", "*.csv")])
+        file_path = "../exported_csv/" + simpledialog.askstring('Ventana', "Ingrese el nombre del archivo")+ ".csv"
 
         if not file_path:
             return  # Si el usuario cancela, no hacer nada
@@ -77,30 +77,33 @@ class App:
         
         match opcion:
             case "BERNOULLI":
-                extra = simpledialog.askfloat('ventana',"Ingrese un numero float")
+                extra = simpledialog.askfloat('ventana',"La probabilidad de exito (decimal)")
             case "POISSON":
-                extra = simpledialog.askfloat('Ventana', "Ingrese un valor tipo float")
-                extra2 = simpledialog.askinteger('Ventana', "Ingrese un valor entero")
+                extra = simpledialog.askfloat('Ventana', "Ingrese la media")
+                extra2 = simpledialog.askinteger('Ventana', "Ingrese el numero de intervalos")
                 
             case "INTERVALOS":
-                extra = simpledialog.askinteger('Ventana', "Ingrese un valor entero")
+                extra = simpledialog.askinteger('Ventana', "Ingrese el numero de intervalos")
             case _:
                 pass
         
         texto += str(extra)+";"+str(extra2)
         
         print(texto)
-        resultado = self.ejecutar_programa_y_dar_entrada("main", texto)
+        resultado = self.ejecutar_programa_y_dar_entrada("./main", texto)
         self.abrir_dialogo(resultado)
         
     
     def cargar_csv(self):
-        file_path = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
+        # Establecer la carpeta inicial del filedialog
+        initial_dir = "../exported_csv"
+        file_path = filedialog.askopenfilename(initialdir=initial_dir, filetypes=[("CSV files", "*.csv")])
+#sfile_path = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
 
         if not file_path:
             return  # Si el usuario cancela, no hacer nada
         
-        return "../pruebas/"+file_path.split("/")[-1]
+        return "../exported_csv/"+file_path.split("/")[-1]
     
     def ejecutar_programa_y_dar_entrada(self, comando, entrada):
         # Ejecuta el programa dado y proporciona entrada estándar

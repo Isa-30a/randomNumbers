@@ -6,7 +6,6 @@ import (
 	"math"
 	"os"
 	"pruebas/archivos"
-
 	"gonum.org/v1/gonum/stat/distuv"
 )
 
