@@ -3,6 +3,7 @@ from table import Table
 from tkinter import END, filedialog, messagebox, simpledialog, Toplevel, Text
 import csv
 import subprocess
+import platform
 
 class App:
     def __init__(self, root):
@@ -90,7 +91,11 @@ class App:
         texto += str(extra)+";"+str(extra2)
         
         print(texto)
-        comando = "./main"
+        sistema_operativo = platform.system()
+        if sistema_operativo == "Windows":
+            comando = "main"
+        else:
+            comando = "./main"
         resultado = self.ejecutar_programa_y_dar_entrada(comando, texto)
         self.abrir_dialogo(resultado)
         
