@@ -90,7 +90,8 @@ class App:
         texto += str(extra)+";"+str(extra2)
         
         print(texto)
-        resultado = self.ejecutar_programa_y_dar_entrada("./main", texto)
+        comando = "./main"
+        resultado = self.ejecutar_programa_y_dar_entrada(comando, texto)
         self.abrir_dialogo(resultado)
         
     
