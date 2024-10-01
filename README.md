@@ -20,8 +20,7 @@ Esta aplicación genera numeros aleatorios por medio de generadores lineales:
 # ¿Como funciona?
 
 ## Requisitos
-1. Tener instalado python con tkinter
-2. Tener instalado golang en el sistema
+1. Tener instalado Python con Tkinter
 
 ## Ejecutar el archivo 
 1. Ejecuta el archivo main.py que se encuentra en la carpeta "Simulación"
