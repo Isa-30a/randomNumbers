@@ -68,7 +68,6 @@ class App:
                 writer.writerow([column_value])
 
     def probar(self):
-        self.table.limpiar_tabla()
         #[opcion prueba];csv;
         opcion = self.input_frame.pruebas.get()
         #"CORRIDAS", "MEDIA", "VARIANZA", , "KOLGOMOROV", "POISSON", "POKER"
