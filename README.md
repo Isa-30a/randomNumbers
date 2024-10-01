@@ -1,9 +1,9 @@
-# randomNumbers
-Aplicación que genera numeros aleatorios por medio de generadores lineales
+# RandomNumbers
+Esta aplicación genera numeros aleatorios por medio de generadores lineales:
  * Congruencial mixto
  * Congruencial multiplicativo
 
-## Features:
+# Features:
 1. Genera numeros aleatorios
 2. Exporta los numeros en archivo .csv
 3. Realiza pruebas estadisticas:
@@ -13,7 +13,7 @@ Aplicación que genera numeros aleatorios por medio de generadores lineales
     * Poker
     * Kolmogorov-Smirnof
     * Corridas arriba y abajo
-4. Realiza variables aleatorias con distribución unifome
+4. Realiza variables aleatorias con distribución uniforme
     * Poisson
     * Bernoulli
 
